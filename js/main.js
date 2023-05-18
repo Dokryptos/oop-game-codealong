@@ -25,6 +25,7 @@ class Player{
     moveLeft(){
         this.positionX--;
         this.domELement.style.left = this.positionX + 'vw';
+
     }
 
     moveRight(){
@@ -35,9 +36,66 @@ class Player{
 
 
 
+class Ennemi{
+    constructor(){
+        this.positionX = Math.random() * (100 - 10) + 1; //Create ennemi with randomely PositionX
+        this.positionY = 100;
+        this.width = 10;
+        this.height = 5;
+
+        this.domELement=null;
+        this.createDomElement();
+
+    }
+    createDomElement(){
+        this.domELement = document.createElement("div");
+        this.domELement.className = 'ennemi'
+
+
+        this.domELement.style.width = this.width + 'vw';
+        this.domELement.style.height = this.height + 'vh';
+        this.domELement.style.bottom = this.positionY + 'vh' ;
+        this.domELement.style.left = this.positionX + 'vw';
+
+
+        const playerElmId = document.getElementById('board');
+        playerElmId.appendChild(this.domELement)
+    }
+    moveDown(){
+        this.positionY--;
+        this.domELement.style.bottom = this.positionY +'vh';
+        if(this.positionY === -20){         // I delete the Ennemi after -20Vh for keep the memories and fluidity safe.
+            this.domELement.remove()
+        }
+    }
+}
+
 
 
 const player = new Player();
+const ennemiArr = [];// here, we will store instances of the class Ennemi
+
+// Create ennemi every 1.5sec
+setInterval(() => {
+
+    const newEnnemi = new Ennemi();
+    ennemiArr.push(newEnnemi);
+
+}, 1500);
+
+
+// ennemi down every 0.1 sec
+setInterval(() => {
+
+
+
+    ennemiArr.forEach((e)=>{
+        e.moveDown()
+    })
+}, 100);
+
+
+
 
 
 // Event listeners
@@ -47,4 +105,6 @@ document.addEventListener("keydown", (Event) =>{
     } else if(Event.code === 'ArrowLeft'){
         player.moveLeft();
     }
-})
+});
+
+
