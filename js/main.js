@@ -65,8 +65,8 @@ class Ennemi{
         this.positionY--;
         this.domELement.style.bottom = this.positionY +'vh';
         if(this.positionY === -20){         // I delete the Ennemi after -20Vh for keep the memories and fluidity safe.
-            this.domELement.remove()
-        }
+            this.domELement.remove()    
+        } 
     }
 }
 
@@ -86,11 +86,17 @@ setInterval(() => {
 
 // ennemi down every 0.1 sec
 setInterval(() => {
-
-
-
     ennemiArr.forEach((e)=>{
         e.moveDown()
+        
+        if(
+        e.positionX < player.positionX + player.width &&
+        e.positionX + e.width > player.positionX &&
+        e.positionY < player.positionY + player.height &&
+        e.height + e.positionY > player.positionY){
+
+            alert('game Over')
+        }
     })
 }, 100);
 
