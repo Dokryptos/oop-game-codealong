@@ -57,6 +57,7 @@ class Game {
                 alert('game Over')
             }
     }
+    //doesn't work
     /*removeObstacleOutside(obstacleInstance){
         if(obstacleInstance.positionY < 0 - e.height){
             
