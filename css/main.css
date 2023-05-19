@@ -7,6 +7,7 @@ body {
 #board{
     height: 100vh;
     position: relative;
+    overflow: hidden;
 }
 
 #player{

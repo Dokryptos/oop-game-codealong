@@ -70,7 +70,7 @@ class Ennemi{
     moveDown(){
         this.positionY--;
         this.domELement.style.bottom = this.positionY +'vh';
-        // if(this.positionY === -5){         // I delete the Ennemi after -20Vh for keep the memories and fluidity safe.
+        // if(this.positionY === -5){         // I delete the Ennemi after -5Vh for keep the memories and fluidity safe. BETTER SOLUTION OF THE ACTUALLY REMOVE()
         //     this.domELement.remove()    
         // } 
     }
@@ -105,7 +105,7 @@ setInterval(() => {
         }
 
         if(e.positionY < 0 - e.height){
-            e.domElement.remove()
+            e.domElement.remove()// Delete l'element si il atteint 0 moins sa hauteur (visuel)
             
             ennemiArr.shift() // we delete the element of the array
         }
