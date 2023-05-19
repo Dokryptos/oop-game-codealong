@@ -1,3 +1,73 @@
+class Game {
+    constructor(){
+        this.ennemiArr = [];// here, we will store instances of the class Ennemi
+        this.player = null
+        
+    }
+    start(){
+        this.player = new Player();
+        
+        this.attachEventListeners()
+
+
+        // Create ennemi every 1.5sec
+    setInterval(() => {
+        const newEnnemi = new Ennemi();
+        this.ennemiArr.push(newEnnemi);
+        }, 1500);
+    
+        
+    // donne l'ordre a chaque ennemi creer de descendre toute les 0.1 sec et si ils touchent le player
+    // il donne egalement la suppression de l'ennemi dans l'array et du visuel des qu'il est en dessous de l'ecran.
+
+    setInterval(() => {
+        this.ennemiArr.forEach((e)=>{
+
+            //Move ennemi
+            e.moveDown()
+
+            //Detect collision
+            this.detectCollision(e)
+
+            //Detected if ennemi need to be removed
+            //this.removeObstacleOutside(e)
+
+            });
+        }, 100);    
+    }
+    attachEventListeners(){
+        // Event listeners
+        document.addEventListener("keydown", (Event) =>{
+            if(Event.code === 'ArrowRight'){
+                this.player.moveRight();
+            } else if(Event.code === 'ArrowLeft'){
+                this.player.moveLeft();
+            }
+        })
+    }
+    detectCollision(obstacleInstance){ 
+        // il creer une collision et alert(GAme Over)
+         if(
+            obstacleInstance.positionX < this.player.positionX + this.player.width &&
+            obstacleInstance.positionX + obstacleInstance.width > this.player.positionX &&
+            obstacleInstance.positionY < this.player.positionY + this.player.height &&
+            obstacleInstance.height + obstacleInstance.positionY > this.player.positionY
+            ){
+
+                alert('game Over')
+            }
+    }
+    /*removeObstacleOutside(obstacleInstance){
+        if(obstacleInstance.positionY < 0 - e.height){
+            
+            obstacleInstance.domElement.remove()// Delete l'element si il atteint 0 moins sa hauteur (visuel)
+                
+                this.ennemiArr.shift() // we delete the element of the array
+            }
+    }*/
+
+}
+    
 class Player{
     constructor(){
         this.positionX = 50;
@@ -70,59 +140,17 @@ class Ennemi{
     moveDown(){
         this.positionY--;
         this.domELement.style.bottom = this.positionY +'vh';
-        // if(this.positionY === -5){         // I delete the Ennemi after -5Vh for keep the memories and fluidity safe. BETTER SOLUTION OF THE ACTUALLY REMOVE()
-        //     this.domELement.remove()    
-        // } 
+        if(this.positionY === -5){         // I delete the Ennemi after -5Vh for keep the memories and fluidity safe. BETTER SOLUTION OF THE ACTUALLY REMOVE()
+             this.domELement.remove()    
+        } 
     }
 }
 
-
-
-const player = new Player();
-const ennemiArr = [];// here, we will store instances of the class Ennemi
-
-// Create ennemi every 1.5sec
-setInterval(() => {
-
-    const newEnnemi = new Ennemi();
-    ennemiArr.push(newEnnemi);
-
-}, 1500);
-
-
-// ennemi down every 0.1 sec
-setInterval(() => {
-    ennemiArr.forEach((e)=>{
-        e.moveDown()
-        
-        if(
-        e.positionX < player.positionX + player.width &&
-        e.positionX + e.width > player.positionX &&
-        e.positionY < player.positionY + player.height &&
-        e.height + e.positionY > player.positionY){
-
-            alert('game Over')
-        }
-
-        if(e.positionY < 0 - e.height){
-            e.domElement.remove()// Delete l'element si il atteint 0 moins sa hauteur (visuel)
-            
-            ennemiArr.shift() // we delete the element of the array
-        }
-    })
-}, 100);
+const game = new Game();
+game.start();
 
 
 
 
-
-// Event listeners
-document.addEventListener("keydown", (Event) =>{
-    if(Event.code === 'ArrowRight'){
-        player.moveRight();
-    } else if(Event.code === 'ArrowLeft'){
-        player.moveLeft();
-    }
-});
 
 
