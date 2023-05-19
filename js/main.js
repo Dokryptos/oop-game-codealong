@@ -1,8 +1,8 @@
 class Player{
     constructor(){
-        this.positionX = 45;
+        this.positionX = 50;
         this.positionY = 0;
-        this.width = 10;
+        this.width = 10 ;
         this.height = 5;
         
         this.domElement = null;
@@ -23,17 +23,23 @@ class Player{
         playerElmId.appendChild(this.domELement)
     }
     moveLeft(){
+        if(this.positionX === 0){
+            return
+        }else{
         this.positionX--;
         this.domELement.style.left = this.positionX + 'vw';
-
+        }
     }
 
     moveRight(){
+        if(this.positionX === 90){
+            return
+        }else {
         this.positionX++;
         this.domELement.style.left = this.positionX + 'vw';
-    }
+        }
+    }   
 }
-
 
 
 class Ennemi{
@@ -64,9 +70,9 @@ class Ennemi{
     moveDown(){
         this.positionY--;
         this.domELement.style.bottom = this.positionY +'vh';
-        if(this.positionY === -20){         // I delete the Ennemi after -20Vh for keep the memories and fluidity safe.
-            this.domELement.remove()    
-        } 
+        // if(this.positionY === -5){         // I delete the Ennemi after -20Vh for keep the memories and fluidity safe.
+        //     this.domELement.remove()    
+        // } 
     }
 }
 
@@ -96,6 +102,12 @@ setInterval(() => {
         e.height + e.positionY > player.positionY){
 
             alert('game Over')
+        }
+
+        if(e.positionY < 0 - e.height){
+            e.domElement.remove()
+            
+            ennemiArr.shift() // we delete the element of the array
         }
     })
 }, 100);
